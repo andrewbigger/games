@@ -11,7 +11,7 @@ export default defineConfig({
       formats: ['es']
     },
     rollupOptions: {
-      external: ['react', 'react-dom'],
+      external: ['react', 'react-dom', 'fs', 'path', 'os', 'fs/promises'],
       output: {
         globals: {
           react: 'React',

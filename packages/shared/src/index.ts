@@ -25,3 +25,8 @@ export const DEFAULT_GAME_CONFIG: GameConfig = {
   height: 600
 };
 
+/**
+ * Configuration management functions
+ */
+export { getConfig, setConfig, getGlobalConfig, setGlobalConfig, Player } from './config';
+
