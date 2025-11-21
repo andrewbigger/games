@@ -1,0 +1,104 @@
+.game-level-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100vh;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.game-level-content {
+  text-align: center;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 1rem;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  max-width: 800px;
+  width: 90%;
+}
+
+.game-level-title {
+  color: white;
+  font-size: 2.5rem;
+  margin: 0 0 3rem 0;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.game-level-options {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.game-level-button {
+  width: 100%;
+  max-width: 400px;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.15);
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-radius: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: white;
+  text-align: center;
+}
+
+.game-level-button:hover {
+  background: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: scale(1.05);
+  box-shadow: 0 6px 30px rgba(0, 0, 0, 0.4);
+}
+
+.game-level-button:active {
+  transform: scale(0.98);
+}
+
+.game-level-button-title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.game-level-button-description {
+  font-size: 1.2rem;
+  opacity: 0.9;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.game-level-easy {
+  border-color: rgba(72, 187, 120, 0.5);
+}
+
+.game-level-easy:hover {
+  border-color: rgba(72, 187, 120, 0.8);
+  background: rgba(72, 187, 120, 0.2);
+}
+
+.game-level-medium {
+  border-color: rgba(251, 191, 36, 0.5);
+}
+
+.game-level-medium:hover {
+  border-color: rgba(251, 191, 36, 0.8);
+  background: rgba(251, 191, 36, 0.2);
+}
+
+.game-level-hard {
+  border-color: rgba(239, 68, 68, 0.5);
+}
+
+.game-level-hard:hover {
+  border-color: rgba(239, 68, 68, 0.8);
+  background: rgba(239, 68, 68, 0.2);
+}
+

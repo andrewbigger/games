@@ -3,10 +3,11 @@ import { greet, DEFAULT_GAME_CONFIG, type GameConfig, PlayerModal, CharacterModa
 import { SplashScreen } from './SplashScreen';
 import { PlayerSelectionScreen } from './PlayerSelectionScreen';
 import { CharacterSelectionScreen } from './CharacterSelectionScreen';
+import { GameLevelScreen, type GameDifficulty } from './GameLevelScreen';
 import { VersusScreen } from './VersusScreen';
 import './App.css';
 
-type Screen = 'splash' | 'player-selection' | 'character-selection' | 'versus' | 'game';
+type Screen = 'splash' | 'player-selection' | 'character-selection' | 'game-level' | 'versus' | 'game';
 
 function App() {
   const [config, setConfig] = useState<GameConfig>(DEFAULT_GAME_CONFIG);
@@ -15,6 +16,7 @@ function App() {
   const [currentScreen, setCurrentScreen] = useState<Screen>('splash');
   const [selectedPlayer, setSelectedPlayer] = useState<Player | null>(null);
   const [selectedCharacter, setSelectedCharacter] = useState<Character | null>(null);
+  const [selectedDifficulty, setSelectedDifficulty] = useState<GameDifficulty | null>(null);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [shouldSlideIn, setShouldSlideIn] = useState(false);
   const [gameCountdown, setGameCountdown] = useState<number | null>(null);
@@ -79,6 +81,22 @@ function App() {
 
   const handleCharacterSelect = (character: Character) => {
     setSelectedCharacter(character);
+    setIsTransitioning(true);
+    setShouldSlideIn(false);
+    setTimeout(() => {
+      setCurrentScreen('game-level');
+      setIsTransitioning(false);
+      // Trigger slide-in animation after a brief moment
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          setShouldSlideIn(true);
+        });
+      });
+    }, 300);
+  };
+
+  const handleGameLevelSelect = (difficulty: GameDifficulty) => {
+    setSelectedDifficulty(difficulty);
     setIsTransitioning(true);
     setShouldSlideIn(false);
     setTimeout(() => {
@@ -153,6 +171,12 @@ function App() {
               selectedPlayer={selectedPlayer} 
               onCharacterSelect={handleCharacterSelect} 
             />
+          </div>
+        )}
+        
+        {currentScreen === 'game-level' && selectedPlayer && selectedCharacter && (
+          <div className={`screen screen-game-level ${isTransitioning ? 'slide-out-left' : (shouldSlideIn ? 'slide-in-right' : '')}`}>
+            <GameLevelScreen onLevelSelect={handleGameLevelSelect} />
           </div>
         )}
         

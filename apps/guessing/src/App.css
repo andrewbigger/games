@@ -100,6 +100,18 @@
   transform: translateX(-100%);
 }
 
+.screen-game-level {
+  transform: translateX(100%);
+}
+
+.screen-game-level.slide-in-right {
+  transform: translateX(0);
+}
+
+.screen-game-level.slide-out-left {
+  transform: translateX(-100%);
+}
+
 .screen-versus {
   transform: translateX(100%);
 }
