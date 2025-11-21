@@ -9,15 +9,20 @@
     ".": {
       "import": "./dist/index.js",
       "types": "./dist/index.d.ts"
+    },
+    "./node-config": {
+      "import": "./dist/config.js",
+      "types": "./dist/config.d.ts"
     }
   },
   "scripts": {
-    "build": "tsc && vite build",
+    "build": "pnpm tsc && vite build && npx tsc src/config.ts --outDir dist --declaration --declarationMap --module esnext --moduleResolution node --target es2020 --types node --skipLibCheck --esModuleInterop --allowSyntheticDefaultImports",
     "dev": "vite build --watch",
     "type-check": "tsc --noEmit"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",
+    "@types/react": "^18.2.15",
     "typescript": "^5.3.3",
     "vite": "^5.0.0",
     "vite-plugin-dts": "^3.6.4"

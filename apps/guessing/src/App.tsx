@@ -1,23 +1,132 @@
-import { useState } from 'react';
-import { greet, DEFAULT_GAME_CONFIG, type GameConfig } from '@games/shared';
+import { useState, useEffect } from 'react';
+import { greet, DEFAULT_GAME_CONFIG, type GameConfig, PlayerModal, CharacterModal, type Player, type Character } from '@games/shared';
+import { SplashScreen } from './SplashScreen';
+import { PlayerSelectionScreen } from './PlayerSelectionScreen';
+import { CharacterSelectionScreen } from './CharacterSelectionScreen';
 import './App.css';
+
+type Screen = 'splash' | 'player-selection' | 'character-selection' | 'game';
 
 function App() {
   const [config, setConfig] = useState<GameConfig>(DEFAULT_GAME_CONFIG);
+  const [isPlayerModalOpen, setIsPlayerModalOpen] = useState(false);
+  const [isCharacterModalOpen, setIsCharacterModalOpen] = useState(false);
+  const [currentScreen, setCurrentScreen] = useState<Screen>('splash');
+  const [selectedPlayer, setSelectedPlayer] = useState<Player | null>(null);
+  const [selectedCharacter, setSelectedCharacter] = useState<Character | null>(null);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+
+  // Keyboard shortcut handlers: Ctrl/Cmd + Shift + P (Players), Ctrl/Cmd + Shift + C (Characters)
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
+      const modifier = isMac ? e.metaKey : e.ctrlKey;
+      const key = e.key.toLowerCase();
+      
+      if (modifier && e.shiftKey) {
+        if (key === 'p') {
+          e.preventDefault();
+          e.stopPropagation();
+          setIsPlayerModalOpen((prev) => !prev);
+        } else if (key === 'c') {
+          e.preventDefault();
+          e.stopPropagation();
+          setIsCharacterModalOpen((prev) => !prev);
+        }
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown, true);
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown, true);
+    };
+  }, []);
+
+  const handleSplashComplete = () => {
+    setIsTransitioning(true);
+    setTimeout(() => {
+      setCurrentScreen('player-selection');
+      setIsTransitioning(false);
+    }, 300);
+  };
+
+  const handlePlayerSelect = (player: Player) => {
+    setSelectedPlayer(player);
+    setIsTransitioning(true);
+    setTimeout(() => {
+      setCurrentScreen('character-selection');
+      setIsTransitioning(false);
+    }, 300);
+  };
+
+  const handleCharacterSelect = (character: Character) => {
+    setSelectedCharacter(character);
+    setIsTransitioning(true);
+    setTimeout(() => {
+      setCurrentScreen('game');
+      setIsTransitioning(false);
+    }, 300);
+  };
 
   return (
     <div className="app">
-      <header className="app-header">
-        <h1>{config.title}</h1>
-        <p>{greet('Player')} Welcome to the Guessing Game!</p>
-        <div className="game-info">
-          <p>Version: {config.version}</p>
-          <p>Dimensions: {config.width} x {config.height}</p>
-        </div>
-        <p className="shared-lib-note">
-          This component imports from <code>@games/shared</code> to demonstrate workspace linking.
-        </p>
-      </header>
+      <div className={`screen-container ${isTransitioning ? 'transitioning' : ''}`}>
+        {currentScreen === 'splash' && (
+          <div className={`screen screen-splash ${isTransitioning ? 'slide-out-left' : ''}`}>
+            <SplashScreen onComplete={handleSplashComplete} />
+          </div>
+        )}
+        
+        {currentScreen === 'player-selection' && (
+          <div className={`screen screen-player-selection ${isTransitioning ? 'slide-out-left' : 'slide-in-right'}`}>
+            <PlayerSelectionScreen onPlayerSelect={handlePlayerSelect} />
+          </div>
+        )}
+        
+        {currentScreen === 'character-selection' && selectedPlayer && (
+          <div className={`screen screen-character-selection ${isTransitioning ? 'slide-out-left' : 'slide-in-right'}`}>
+            <CharacterSelectionScreen 
+              selectedPlayer={selectedPlayer} 
+              onCharacterSelect={handleCharacterSelect} 
+            />
+          </div>
+        )}
+        
+        {currentScreen === 'game' && (
+          <div className={`screen screen-game ${isTransitioning ? '' : 'slide-in-right'}`}>
+            <header className="app-header">
+              <h1>{config.title}</h1>
+              <p>{greet(selectedPlayer?.name || 'Player')} Welcome to the Guessing Game!</p>
+              {selectedPlayer && (
+                <div className="selected-player-info">
+                  <p>Selected Player: <strong>{selectedPlayer.name}</strong></p>
+                </div>
+              )}
+              {selectedCharacter && (
+                <div className="selected-player-info">
+                  <p>Playing Against: <strong>{selectedCharacter.name}</strong></p>
+                </div>
+              )}
+              <div className="game-info">
+                <p>Version: {config.version}</p>
+                <p>Dimensions: {config.width} x {config.height}</p>
+              </div>
+              <p className="shared-lib-note">
+                This component imports from <code>@games/shared</code> to demonstrate workspace linking.
+              </p>
+              <p style={{ marginTop: '1rem', fontSize: '0.85rem', color: 'rgba(255, 255, 255, 0.8)' }}>
+                Press <kbd style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)', padding: '0.2rem 0.4rem', borderRadius: '0.25rem', fontFamily: 'monospace' }}>
+                  {navigator.platform.toUpperCase().indexOf('MAC') >= 0 ? 'Cmd' : 'Ctrl'}+Shift+P
+                </kbd> to manage players, <kbd style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)', padding: '0.2rem 0.4rem', borderRadius: '0.25rem', fontFamily: 'monospace' }}>
+                  {navigator.platform.toUpperCase().indexOf('MAC') >= 0 ? 'Cmd' : 'Ctrl'}+Shift+C
+                </kbd> to manage characters
+              </p>
+            </header>
+          </div>
+        )}
+      </div>
+      <PlayerModal isOpen={isPlayerModalOpen} onClose={() => setIsPlayerModalOpen(false)} />
+      <CharacterModal isOpen={isCharacterModalOpen} onClose={() => setIsCharacterModalOpen(false)} />
     </div>
   );
 }

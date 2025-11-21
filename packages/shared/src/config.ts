@@ -8,13 +8,20 @@ const CONFIG_FILE = join(CONFIG_DIR, 'config.json');
 /**
  * Player interface for global configuration
  */
-export interface Player {
+export type Player = {
+  id: string; // UUID for the player
   name: string;
-  avatar: string;
-}
+  avatar: string; // Path to avatar file (e.g., $HOME/.games/players/{uuid}.png)
+};
+
+/**
+ * Character interface for global configuration (same structure as Player)
+ */
+export type Character = Player;
 
 interface GlobalConfig {
   players?: Player[];
+  characters?: Character[];
   [configName: string]: unknown;
 }
 

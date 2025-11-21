@@ -27,6 +27,18 @@ export const DEFAULT_GAME_CONFIG: GameConfig = {
 
 /**
  * Configuration management functions
+ * These use Electron IPC when running in the renderer process
  */
-export { getConfig, setConfig, getGlobalConfig, setGlobalConfig, Player } from './config';
+export { getConfig, setConfig, getGlobalConfig, setGlobalConfig, pickAvatarFile, saveAvatarFile, readAvatarFile, getAvatarPath, bufferToDataURL } from './config-browser';
+export type { Player, Character } from './config';
+
+/**
+ * Player management modal component
+ */
+export { PlayerModal } from './PlayerModal';
+
+/**
+ * Character management modal component
+ */
+export { CharacterModal } from './CharacterModal';
 
