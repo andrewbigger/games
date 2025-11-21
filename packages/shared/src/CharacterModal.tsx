@@ -203,8 +203,6 @@ export function CharacterModal({ isOpen, onClose }: CharacterModalProps) {
     }
   };
 
-  if (!isOpen) return null;
-
   return (
     <div
       style={{
@@ -213,12 +211,17 @@ export function CharacterModal({ isOpen, onClose }: CharacterModalProps) {
         left: 0,
         right: 0,
         bottom: 0,
-        backgroundColor: 'rgba(0, 0, 0, 0.7)',
+        backgroundColor: isOpen ? 'rgba(0, 0, 0, 0.7)' : 'rgba(0, 0, 0, 0)',
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'flex-end',
         zIndex: 1000,
-        backdropFilter: 'blur(4px)',
+        backdropFilter: isOpen ? 'blur(4px)' : 'none',
+        paddingRight: '2rem',
+        transition: 'background-color 0.3s ease-in-out',
+        pointerEvents: isOpen ? 'auto' : 'none',
+        visibility: isOpen ? 'visible' : 'hidden',
+        opacity: isOpen ? 1 : 0,
       }}
       onClick={handleBackdropClick}
     >
@@ -232,6 +235,10 @@ export function CharacterModal({ isOpen, onClose }: CharacterModalProps) {
           maxHeight: '80vh',
           overflow: 'auto',
           boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)',
+          transform: isOpen ? 'translateX(0)' : 'translateX(100%)',
+          transition: 'transform 0.3s ease-in-out',
+          marginLeft: 'auto',
+          marginRight: 0,
         }}
         onClick={(e) => e.stopPropagation()}
       >

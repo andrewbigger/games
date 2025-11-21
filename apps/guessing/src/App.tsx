@@ -15,6 +15,7 @@ function App() {
   const [selectedPlayer, setSelectedPlayer] = useState<Player | null>(null);
   const [selectedCharacter, setSelectedCharacter] = useState<Character | null>(null);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [shouldSlideIn, setShouldSlideIn] = useState(false);
 
   // Keyboard shortcut handlers: Ctrl/Cmd + Shift + P (Players), Ctrl/Cmd + Shift + C (Characters)
   useEffect(() => {
@@ -44,18 +45,32 @@ function App() {
 
   const handleSplashComplete = () => {
     setIsTransitioning(true);
+    setShouldSlideIn(false);
     setTimeout(() => {
       setCurrentScreen('player-selection');
       setIsTransitioning(false);
+      // Trigger slide-in animation after a brief moment
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          setShouldSlideIn(true);
+        });
+      });
     }, 300);
   };
 
   const handlePlayerSelect = (player: Player) => {
     setSelectedPlayer(player);
     setIsTransitioning(true);
+    setShouldSlideIn(false);
     setTimeout(() => {
       setCurrentScreen('character-selection');
       setIsTransitioning(false);
+      // Trigger slide-in animation after a brief moment
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          setShouldSlideIn(true);
+        });
+      });
     }, 300);
   };
 
@@ -70,6 +85,7 @@ function App() {
 
   return (
     <div className="app">
+      <div className="static-background"></div>
       <div className={`screen-container ${isTransitioning ? 'transitioning' : ''}`}>
         {currentScreen === 'splash' && (
           <div className={`screen screen-splash ${isTransitioning ? 'slide-out-left' : ''}`}>
@@ -78,13 +94,13 @@ function App() {
         )}
         
         {currentScreen === 'player-selection' && (
-          <div className={`screen screen-player-selection ${isTransitioning ? 'slide-out-left' : 'slide-in-right'}`}>
+          <div className={`screen screen-player-selection ${isTransitioning ? 'slide-out-left' : (shouldSlideIn ? 'slide-in-right' : '')}`}>
             <PlayerSelectionScreen onPlayerSelect={handlePlayerSelect} />
           </div>
         )}
         
         {currentScreen === 'character-selection' && selectedPlayer && (
-          <div className={`screen screen-character-selection ${isTransitioning ? 'slide-out-left' : 'slide-in-right'}`}>
+          <div className={`screen screen-character-selection ${isTransitioning ? 'slide-out-left' : (shouldSlideIn ? 'slide-in-right' : '')}`}>
             <CharacterSelectionScreen 
               selectedPlayer={selectedPlayer} 
               onCharacterSelect={handleCharacterSelect} 
