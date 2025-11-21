@@ -100,6 +100,18 @@
   transform: translateX(-100%);
 }
 
+.screen-versus {
+  transform: translateX(100%);
+}
+
+.screen-versus.slide-in-right {
+  transform: translateX(0);
+}
+
+.screen-versus.slide-out-left {
+  transform: translateX(-100%);
+}
+
 .screen-game {
   transform: translateX(100%);
 }
@@ -155,5 +167,39 @@
   padding: 0.2rem 0.4rem;
   border-radius: 0.25rem;
   font-family: 'Courier New', monospace;
+}
+
+.game-countdown {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.game-countdown-number {
+  color: white;
+  font-size: 8rem;
+  font-weight: bold;
+  text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.6);
+  animation: countdownPulse 0.8s ease-out;
+}
+
+@keyframes countdownPulse {
+  0% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
