@@ -17,5 +17,9 @@ contextBridge.exposeInMainWorld('electronAPI', {
     read: (filePath) => ipcRenderer.invoke('avatar:read', filePath),
     getPath: (uuid) => ipcRenderer.invoke('avatar:getPath', uuid),
   },
+  // App API
+  app: {
+    quit: () => ipcRenderer.invoke('app:quit'),
+  },
 });
 

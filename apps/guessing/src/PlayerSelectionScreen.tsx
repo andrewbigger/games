@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { getGlobalConfig, readAvatarFile, bufferToDataURL, type Player } from '@games/shared';
+import { QuitModal } from './QuitModal';
 import './PlayerSelectionScreen.css';
 
 interface PlayerSelectionScreenProps {
@@ -10,6 +11,7 @@ export function PlayerSelectionScreen({ onPlayerSelect }: PlayerSelectionScreenP
   const [players, setPlayers] = useState<Player[]>([]);
   const [avatarPreviews, setAvatarPreviews] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(true);
+  const [showQuitModal, setShowQuitModal] = useState(false);
 
   useEffect(() => {
     loadPlayers();
@@ -47,8 +49,26 @@ export function PlayerSelectionScreen({ onPlayerSelect }: PlayerSelectionScreenP
     onPlayerSelect(player);
   };
 
+  const handleQuit = () => {
+    setShowQuitModal(true);
+  };
+
+  const handleQuitConfirm = async () => {
+    if (window.electronAPI?.app?.quit) {
+      await window.electronAPI.app.quit();
+    }
+  };
+
+  const handleQuitCancel = () => {
+    setShowQuitModal(false);
+  };
+
   return (
     <div className="player-selection-screen">
+      <QuitModal isOpen={showQuitModal} onConfirm={handleQuitConfirm} onCancel={handleQuitCancel} />
+      <button className="screen-quit-button" onClick={handleQuit} aria-label="Quit application">
+        <span className="screen-quit-icon">⏹</span>
+      </button>
       <div className="player-selection-content">
         <h2 className="player-selection-title">Choose Your Player</h2>
         {loading ? (

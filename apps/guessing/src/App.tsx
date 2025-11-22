@@ -5,6 +5,7 @@ import { PlayerSelectionScreen } from './PlayerSelectionScreen';
 import { CharacterSelectionScreen } from './CharacterSelectionScreen';
 import { GameLevelScreen, type GameDifficulty } from './GameLevelScreen';
 import { VersusScreen } from './VersusScreen';
+import { GuessingGame } from './GuessingGame';
 import './App.css';
 
 type Screen = 'splash' | 'player-selection' | 'character-selection' | 'game-level' | 'versus' | 'game';
@@ -149,6 +150,23 @@ function App() {
     return () => clearTimeout(timer);
   }, [gameCountdown]);
 
+  const handleGameEnd = () => {
+    setIsTransitioning(true);
+    setShouldSlideIn(false);
+    setGameStarted(false);
+    setGameCountdown(null);
+    setTimeout(() => {
+      setCurrentScreen('character-selection');
+      setIsTransitioning(false);
+      // Trigger slide-in animation after a brief moment
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          setShouldSlideIn(true);
+        });
+      });
+    }, 300);
+  };
+
   return (
     <div className="app">
       <div className="static-background"></div>
@@ -190,7 +208,7 @@ function App() {
           </div>
         )}
         
-        {currentScreen === 'game' && (
+        {currentScreen === 'game' && selectedPlayer && selectedCharacter && selectedDifficulty && (
           <div className={`screen screen-game ${isTransitioning ? '' : 'slide-in-right'}`}>
             {!gameStarted ? (
               <div className="game-countdown">
@@ -199,34 +217,12 @@ function App() {
                 )}
               </div>
             ) : (
-              <header className="app-header">
-                <h1>{config.title}</h1>
-                <p>{greet(selectedPlayer?.name || 'Player')} Welcome to the Guessing Game!</p>
-                {selectedPlayer && (
-                  <div className="selected-player-info">
-                    <p>Selected Player: <strong>{selectedPlayer.name}</strong></p>
-                  </div>
-                )}
-                {selectedCharacter && (
-                  <div className="selected-player-info">
-                    <p>Playing Against: <strong>{selectedCharacter.name}</strong></p>
-                  </div>
-                )}
-                <div className="game-info">
-                  <p>Version: {config.version}</p>
-                  <p>Dimensions: {config.width} x {config.height}</p>
-                </div>
-                <p className="shared-lib-note">
-                  This component imports from <code>@games/shared</code> to demonstrate workspace linking.
-                </p>
-                <p style={{ marginTop: '1rem', fontSize: '0.85rem', color: 'rgba(255, 255, 255, 0.8)' }}>
-                  Press <kbd style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)', padding: '0.2rem 0.4rem', borderRadius: '0.25rem', fontFamily: 'monospace' }}>
-                    {navigator.platform.toUpperCase().indexOf('MAC') >= 0 ? 'Cmd' : 'Ctrl'}+Shift+P
-                  </kbd> to manage players, <kbd style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)', padding: '0.2rem 0.4rem', borderRadius: '0.25rem', fontFamily: 'monospace' }}>
-                    {navigator.platform.toUpperCase().indexOf('MAC') >= 0 ? 'Cmd' : 'Ctrl'}+Shift+C
-                  </kbd> to manage characters
-                </p>
-              </header>
+              <GuessingGame
+                selectedPlayer={selectedPlayer}
+                selectedCharacter={selectedCharacter}
+                selectedDifficulty={selectedDifficulty}
+                onGameEnd={handleGameEnd}
+              />
             )}
           </div>
         )}

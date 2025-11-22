@@ -21,6 +21,9 @@ declare global {
         read: (filePath: string) => Promise<number[]>;
         getPath: (uuid: string) => Promise<string>;
       };
+      app: {
+        quit: () => Promise<void>;
+      };
     };
   }
 }

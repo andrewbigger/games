@@ -41,7 +41,8 @@ function createWindow() {
 
   if (isDev) {
     mainWindow.loadURL('http://localhost:5173');
-    mainWindow.webContents.openDevTools();
+    // Developer tools can be opened manually with Cmd+Option+I (Mac) or Ctrl+Shift+I (Windows/Linux)
+    // mainWindow.webContents.openDevTools();
   } else {
     mainWindow.loadFile(path.join(__dirname, '../dist/index.html'));
   }
@@ -149,6 +150,11 @@ ipcMain.handle('avatar:pickFile', async (_event) => {
 
 ipcMain.handle('avatar:getPath', async (_event, uuid) => {
   return path.join(PLAYERS_DIR, `${uuid}.png`);
+});
+
+// App quit handler
+ipcMain.handle('app:quit', async () => {
+  app.quit();
 });
 
 app.whenReady().then(() => {
