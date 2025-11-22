@@ -71,7 +71,7 @@ export function CharacterSelectionScreen({ selectedPlayer, onCharacterSelect }: 
         <span className="screen-quit-icon">⏹</span>
       </button>
       <div className="player-selection-content">
-        <h2 className="player-selection-title">Choose Character to Play Against</h2>
+        <h2 className="player-selection-title">Choose Character</h2>
         {loading ? (
           <div className="player-selection-loading">Loading characters...</div>
         ) : characters.length === 0 ? (

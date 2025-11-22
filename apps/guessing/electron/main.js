@@ -154,7 +154,7 @@ ipcMain.handle('avatar:getPath', async (_event, uuid) => {
 
 // App quit handler
 ipcMain.handle('app:quit', async () => {
-  app.quit();
+  app.exit(0);
 });
 
 app.whenReady().then(() => {
@@ -173,7 +173,7 @@ console.log('Electron app setup complete, waiting for ready...');
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
-    app.quit();
+    app.exit(0);
   }
 });
 

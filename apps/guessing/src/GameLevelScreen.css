@@ -26,6 +26,7 @@
 
 .game-level-title {
   color: white;
+  font-family: 'SuperMabroz', sans-serif;
   font-size: 2.5rem;
   margin: 0 0 3rem 0;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
@@ -63,6 +64,7 @@
 }
 
 .game-level-button-title {
+  font-family: 'SuperMabroz', sans-serif;
   font-size: 2rem;
   font-weight: bold;
   margin-bottom: 0.5rem;

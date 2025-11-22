@@ -288,6 +288,7 @@
 }
 
 .game-win-title {
+  font-family: 'SuperMabroz', sans-serif;
   font-size: 5rem;
   color: white;
   font-weight: bold;
@@ -344,6 +345,7 @@
 }
 
 .game-lose-title {
+  font-family: 'SuperMabroz', sans-serif;
   font-size: 4rem;
   color: white;
   font-weight: bold;
@@ -535,6 +537,7 @@
 }
 
 .exit-modal-title {
+  font-family: 'SuperMabroz', sans-serif;
   font-size: 2rem;
   font-weight: bold;
   color: #333;

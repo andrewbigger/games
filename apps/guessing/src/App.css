@@ -194,6 +194,7 @@
 
 .game-countdown-number {
   color: white;
+  font-family: 'SuperMabroz', sans-serif;
   font-size: 8rem;
   font-weight: bold;
   text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.6);

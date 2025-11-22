@@ -1,3 +1,10 @@
+@font-face {
+  font-family: 'SuperMabroz';
+  src: url('../assets/supermabroz/SuperMabroz-j93xO.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 * {
   margin: 0;
   padding: 0;
