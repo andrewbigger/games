@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { readAvatarFile, bufferToDataURL, type Player, type Character } from '@games/shared';
 import { type GameDifficulty } from './GameLevelScreen';
+import { X } from 'lucide-react';
 import './GuessingGame.css';
 
 interface GuessingGameProps {
@@ -21,7 +22,7 @@ export function GuessingGame({ selectedPlayer, selectedCharacter, selectedDiffic
   const [guess, setGuess] = useState<string>('');
   const [guesses, setGuesses] = useState<number[]>([]);
   const [gameStatus, setGameStatus] = useState<GameStatus>('playing');
-  const [feedback, setFeedback] = useState<'higher' | 'lower' | null>(null);
+  const [feedback, setFeedback] = useState<'higher' | 'lower' | 'duplicate' | null>(null);
   const [showConfetti, setShowConfetti] = useState(false);
   const [showExitModal, setShowExitModal] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -173,6 +174,11 @@ export function GuessingGame({ selectedPlayer, selectedCharacter, selectedDiffic
 
     // Check if already guessed
     if (guesses.includes(guessNum)) {
+      setFeedback('duplicate');
+      // Clear feedback after 2 seconds
+      setTimeout(() => {
+        setFeedback(null);
+      }, 2000);
       return;
     }
 
@@ -299,10 +305,15 @@ export function GuessingGame({ selectedPlayer, selectedCharacter, selectedDiffic
                   <span className="speech-bubble-text">Higher</span>
                   <span className="speech-bubble-icon">↑</span>
                 </>
-              ) : (
+              ) : feedback === 'lower' ? (
                 <>
                   <span className="speech-bubble-text">Lower</span>
                   <span className="speech-bubble-icon">↓</span>
+                </>
+              ) : (
+                <>
+                  <X className="speech-bubble-icon speech-bubble-icon-top" size={32} />
+                  <span className="speech-bubble-text">You've already guessed that, please try again</span>
                 </>
               )}
             </div>

@@ -141,6 +141,17 @@
   animation: speechBubbleAppear 0.3s ease-out;
   z-index: 10;
   white-space: nowrap;
+  max-width: 300px;
+}
+
+.speech-bubble-duplicate {
+  white-space: normal;
+  text-align: center;
+}
+
+.speech-bubble-duplicate .speech-bubble-content {
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
 .speech-bubble::after {
@@ -172,6 +183,15 @@
   color: #667eea;
   font-size: 1.5rem;
   font-weight: bold;
+  flex-shrink: 0;
+}
+
+.speech-bubble-duplicate .speech-bubble-icon {
+  color: #ef4444;
+}
+
+.speech-bubble-icon-top {
+  margin-bottom: 0.25rem;
 }
 
 @keyframes speechBubbleAppear {

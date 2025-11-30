@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { greet, DEFAULT_GAME_CONFIG, type GameConfig, PlayerModal, CharacterModal, type Player, type Character } from '@games/shared';
+import { PlayerModal, CharacterModal, type Player, type Character } from '@games/shared';
 import { SplashScreen } from './SplashScreen';
 import { PlayerSelectionScreen } from './PlayerSelectionScreen';
 import { CharacterSelectionScreen } from './CharacterSelectionScreen';
@@ -11,7 +11,6 @@ import './App.css';
 type Screen = 'splash' | 'player-selection' | 'character-selection' | 'game-level' | 'versus' | 'game';
 
 function App() {
-  const [config, setConfig] = useState<GameConfig>(DEFAULT_GAME_CONFIG);
   const [isPlayerModalOpen, setIsPlayerModalOpen] = useState(false);
   const [isCharacterModalOpen, setIsCharacterModalOpen] = useState(false);
   const [currentScreen, setCurrentScreen] = useState<Screen>('splash');

@@ -24,14 +24,18 @@
   position: relative;
   transform-style: preserve-3d;
   animation: spinCube 3s infinite linear;
+  will-change: transform;
+  transform: translateZ(0);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 @keyframes spinCube {
   0% {
-    transform: rotateX(0deg) rotateY(0deg);
+    transform: translateZ(0) rotateX(0deg) rotateY(0deg);
   }
   100% {
-    transform: rotateX(360deg) rotateY(360deg);
+    transform: translateZ(0) rotateX(360deg) rotateY(360deg);
   }
 }
 
@@ -93,6 +97,12 @@
   color: transparent;
   backdrop-filter: blur(10px);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  will-change: transform;
+  transform: translateZ(0);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .cube-front {

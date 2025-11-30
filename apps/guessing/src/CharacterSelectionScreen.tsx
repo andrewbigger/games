@@ -8,7 +8,7 @@ interface CharacterSelectionScreenProps {
   onCharacterSelect: (character: Character) => void;
 }
 
-export function CharacterSelectionScreen({ selectedPlayer, onCharacterSelect }: CharacterSelectionScreenProps) {
+export function CharacterSelectionScreen({ selectedPlayer: _selectedPlayer, onCharacterSelect }: CharacterSelectionScreenProps) {
   const [characters, setCharacters] = useState<Character[]>([]);
   const [avatarPreviews, setAvatarPreviews] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(true);
