@@ -68,35 +68,11 @@
   transition: transform 0.3s ease-in-out;
 }
 
-.screen-splash {
-  transform: translateX(0);
-}
-
-.screen-splash.slide-out-left {
-  transform: translateX(-100%);
-}
-
 .screen-player-selection {
-  transform: translateX(100%);
-}
-
-.screen-player-selection.slide-in-right {
   transform: translateX(0);
 }
 
 .screen-player-selection.slide-out-left {
-  transform: translateX(-100%);
-}
-
-.screen-character-selection {
-  transform: translateX(100%);
-}
-
-.screen-character-selection.slide-in-right {
-  transform: translateX(0);
-}
-
-.screen-character-selection.slide-out-left {
   transform: translateX(-100%);
 }
 
@@ -112,73 +88,12 @@
   transform: translateX(-100%);
 }
 
-.screen-versus {
-  transform: translateX(100%);
-}
-
-.screen-versus.slide-in-right {
-  transform: translateX(0);
-}
-
-.screen-versus.slide-out-left {
-  transform: translateX(-100%);
-}
-
 .screen-game {
   transform: translateX(100%);
 }
 
 .screen-game.slide-in-right {
   transform: translateX(0);
-}
-
-.selected-player-info {
-  margin: 1rem 0;
-  padding: 0.75rem;
-  background: rgba(255, 255, 255, 0.15);
-  border-radius: 0.5rem;
-  font-size: 1rem;
-}
-
-.app-header {
-  text-align: center;
-  padding: 2rem;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 1rem;
-  backdrop-filter: blur(10px);
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-  max-width: 600px;
-}
-
-.app-header h1 {
-  margin: 0 0 1rem 0;
-  font-size: 2.5rem;
-}
-
-.game-info {
-  margin: 1.5rem 0;
-  padding: 1rem;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 0.5rem;
-}
-
-.game-info p {
-  margin: 0.5rem 0;
-}
-
-.shared-lib-note {
-  margin-top: 1.5rem;
-  padding: 0.75rem;
-  background: rgba(255, 255, 255, 0.15);
-  border-radius: 0.5rem;
-  font-size: 0.9rem;
-}
-
-.shared-lib-note code {
-  background: rgba(0, 0, 0, 0.2);
-  padding: 0.2rem 0.4rem;
-  border-radius: 0.25rem;
-  font-family: 'Courier New', monospace;
 }
 
 .game-countdown {
@@ -194,7 +109,7 @@
 
 .game-countdown-number {
   color: white;
-  font-family: 'Countryside', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   font-size: 8rem;
   font-weight: bold;
   text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.6);
