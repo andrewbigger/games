@@ -24,7 +24,8 @@ export function TypingGame({ selectedPlayer, selectedDifficulty, onGameEnd }: Ty
   const [showExitModal, setShowExitModal] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const [isLetterSubtle, setIsLetterSubtle] = useState(false);
-  const timerIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  const [isShaking, setIsShaking] = useState(false);
+  const timerIntervalRef = useRef<number | null>(null);
 
   // Get time limit based on difficulty
   const getTimeLimit = (difficulty: GameDifficulty): number => {
@@ -142,6 +143,11 @@ export function TypingGame({ selectedPlayer, selectedDifficulty, onGameEnd }: Ty
       } else if (pressedKey.length === 1 && /[A-Z]/.test(pressedKey)) {
         // Wrong key - apply 2 second penalty
         setTimeRemaining((prev) => Math.max(0, prev - 2));
+        // Trigger shake animation
+        setIsShaking(true);
+        setTimeout(() => {
+          setIsShaking(false);
+        }, 500);
       }
     };
 
@@ -173,31 +179,44 @@ export function TypingGame({ selectedPlayer, selectedDifficulty, onGameEnd }: Ty
   const totalLetters = letters.length;
 
   return (
-    <div className="typing-game">
-      {/* Confetti container */}
+    <div className={`typing-game ${isShaking ? 'shake' : ''}`}>
+      {/* Fireworks container */}
       {showConfetti && (
-        <div className="confetti-container">
-          {Array.from({ length: 1000 }).map((_, i) => {
-            const angle = Math.random() * Math.PI * 2;
-            const distance = 200 + Math.random() * 600;
-            const randomDelay = Math.random() * 0.3;
-            const randomSize = 4 + Math.random() * 10;
-            const randomRotation = Math.random() * 720;
-            const x = Math.cos(angle) * distance;
-            const y = Math.sin(angle) * distance;
+        <div className="fireworks-container">
+          {Array.from({ length: 24 }).map((_, burstIndex) => {
+            const burstAngle = (burstIndex / 24) * Math.PI * 2;
+            const burstDistance = 50 + Math.random() * 150;
+            const burstX = Math.cos(burstAngle) * burstDistance;
+            const burstY = Math.sin(burstAngle) * burstDistance;
+            const burstDelay = burstIndex * 0.05;
+            
             return (
-              <div
-                key={i}
-                className="confetti"
-                style={{
-                  '--delay': `${randomDelay}s`,
-                  '--x': `${x}px`,
-                  '--y': `${y}px`,
-                  '--rotation': `${randomRotation}deg`,
-                  width: `${randomSize}px`,
-                  height: `${randomSize}px`
-                } as React.CSSProperties}
-              />
+              <div key={burstIndex} className="firework-burst" style={{
+                '--burst-x': `${burstX}px`,
+                '--burst-y': `${burstY}px`,
+                '--burst-delay': `${burstDelay}s`
+              } as React.CSSProperties}>
+                {Array.from({ length: 40 }).map((_, particleIndex) => {
+                  const angle = (particleIndex / 40) * Math.PI * 2;
+                  const distance = 80 + Math.random() * 150;
+                  const particleDelay = burstDelay + Math.random() * 0.15;
+                  const x = Math.cos(angle) * distance;
+                  const y = Math.sin(angle) * distance;
+                  
+                  return (
+                    <div
+                      key={particleIndex}
+                      className="firework-particle"
+                      style={{
+                        '--delay': `${particleDelay}s`,
+                        '--x': `${x}px`,
+                        '--y': `${y}px`,
+                        '--angle': `${angle}rad`
+                      } as React.CSSProperties}
+                    />
+                  );
+                })}
+              </div>
             );
           })}
         </div>

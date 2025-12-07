@@ -20,34 +20,34 @@
   width: 100%;
   height: 100vh;
   z-index: 0;
-  background: linear-gradient(
-    45deg,
-    rgba(100, 100, 150, 0.1) 25%,
-    transparent 25%,
-    transparent 75%,
-    rgba(100, 100, 150, 0.1) 75%,
-    rgba(100, 100, 150, 0.1)
-  ),
-  linear-gradient(
-    45deg,
-    rgba(100, 100, 150, 0.1) 25%,
-    transparent 25%,
-    transparent 75%,
-    rgba(100, 100, 150, 0.1) 75%,
-    rgba(100, 100, 150, 0.1)
-  );
-  background-size: 60px 60px;
-  background-position: 0 0, 30px 30px;
-  animation: moveStripes 10s linear infinite;
-  background-color: #1a1a2e;
+  background-color: #2a2a2a;
+  overflow: hidden;
 }
 
-@keyframes moveStripes {
+.static-background::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: calc(100% + 28px);
+  height: 100%;
+  background: repeating-linear-gradient(
+    45deg,
+    rgba(139, 0, 0, 0.3) 25%,
+    rgba(139, 0, 0, 0.3) 50%,
+    transparent 50%,
+    transparent 75%
+  );
+  background-size: 28px 28px;
+  animation: stripeTransform 2s linear infinite;
+}
+
+@keyframes stripeTransform {
   0% {
-    background-position: 0 0, 30px 30px;
+    transform: translateX(0);
   }
   100% {
-    background-position: 60px 60px, 90px 90px;
+    transform: translateX(calc(28px * -1));
   }
 }
 
