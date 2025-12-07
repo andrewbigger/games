@@ -35,9 +35,14 @@ function createWindow() {
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,
-      preload: path.join(__dirname, 'preload.cjs')
+      preload: path.join(__dirname, 'preload.cjs'),
+      enableBlinkFeatures: 'CSSBackdropFilter',
+      backgroundThrottling: false
     }
   });
+
+  // Enable hardware acceleration for better rendering
+  mainWindow.webContents.setFrameRate(60);
 
   if (isDev) {
     mainWindow.loadURL('http://localhost:5173');
